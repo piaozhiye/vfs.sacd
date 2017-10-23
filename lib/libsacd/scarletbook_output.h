@@ -30,6 +30,7 @@
 
 #include "scarletbook.h"
 #include <sys/atomic.h>
+#include <pthread.h>
 
 // forward declaration
 typedef struct scarletbook_output_format_t scarletbook_output_format_t;
