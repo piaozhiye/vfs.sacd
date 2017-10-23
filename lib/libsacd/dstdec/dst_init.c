@@ -71,6 +71,23 @@ Changes:
 #include "ccp_calc.h"
 #include "conststr.h"
 #include "types.h"
+void* aligned_malloc(size_t size, int alignment)
+{
+	const int pointerSize = sizeof (void*);
+	const int requestedSize = size + alignment - 1 + pointerSize;
+	void* raw = malloc(requestedSize);
+	uintptr_t start = (uintptr_t) raw + pointerSize;
+	void* aligned = (void*) ((start + alignment - 1) & ~(alignment - 1));
+	*(void**) ((uintptr_t) aligned - pointerSize) = raw;
+
+	return aligned;
+}
+
+void aligned_free(void* aligned)
+{
+	void* raw = *(void**) ((uintptr_t) aligned - sizeof (void*));
+	free(raw);
+}
 
 /*============================================================================*/
 /*       STATIC FUNCTION IMPLEMENTATIONS                                      */
@@ -81,7 +98,7 @@ static void *MemoryAllocate(int NrOfElements, int SizeOfElement)
 {
   void *Array;
 
-  if ((Array = _mm_malloc(NrOfElements * SizeOfElement, 16)) == NULL) 
+  if ((Array = aligned_malloc(NrOfElements * SizeOfElement, 16)) == NULL)
   {
     fprintf(stderr,"ERROR: not enough memory available!\n\n");
   }
@@ -90,7 +107,7 @@ static void *MemoryAllocate(int NrOfElements, int SizeOfElement)
 
 static void MemoryFree(void *Array) 
 {
-  _mm_free(Array);
+  aligned_free(Array);
 }
 
 /* General function for allocating memory for array of any type */
