@@ -7,12 +7,21 @@ enable_language(C)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/common
                     ${CMAKE_CURRENT_SOURCE_DIR}/id3
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dstdec)
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dstdec
+		    ${CMAKE_CURRENT_SOURCE_DIR}/iconv/include
+		    ${CMAKE_CURRENT_SOURCE_DIR}/iconv
+                    ${CMAKE_CURRENT_SOURCE_DIR}/iconv/libcharset
+		    ${CMAKE_CURRENT_SOURCE_DIR}/iconv/lib
+                    ${CMAKE_CURRENT_SOURCE_DIR}/iconv/libcharset/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/iconv/srclib)
 
 # Extra flags for GCC
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
-set(SOURCES cuesheet.c
+set(SOURCES iconv/libcharset/lib/localcharset.c
+	    iconv/lib/iconv.c
+	    iconv/lib/relocatable.c
+	    cuesheet.c
             dsdiff.c
             dsf.c
             dst_decoder_ps3.c
@@ -56,5 +65,4 @@ set(SOURCES cuesheet.c
             dstdec/dst_init.c
             dstdec/unpack_dst.c
             dstdec/yarn.c)
-
 add_library(sacd STATIC ${SOURCES})
