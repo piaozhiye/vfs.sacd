@@ -338,7 +338,7 @@ ssize_t CSACDFile::Read(void* context, void* lpBuf, size_t uiBufSize)
   handle->data = ctx->frame_buffer;
   if (handle && ctx->pos < handle->header_size)
   {
-    size_t tocopy = std::min(uiBufSize, (size_t)handle->header_size-ctx->pos);
+    size_t tocopy = std::min(uiBufSize, (size_t)(handle->header_size-ctx->pos));
     memcpy(lpBuf, handle->header+ctx->pos, tocopy);
     ctx->pos += tocopy;
     return tocopy;
