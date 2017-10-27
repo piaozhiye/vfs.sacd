@@ -6,6 +6,7 @@ enable_language(C)
 # Include directory paths
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/common
+		    ${CMAKE_CURRENT_SOURCE_DIR}/bthread
                     ${CMAKE_CURRENT_SOURCE_DIR}/id3
                     ${CMAKE_CURRENT_SOURCE_DIR}/dstdec
 		    ${CMAKE_CURRENT_SOURCE_DIR}/iconv/include
@@ -21,6 +22,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 set(SOURCES iconv/libcharset/lib/localcharset.c
 	    iconv/lib/iconv.c
 	    iconv/lib/relocatable.c
+	    bthread/bthread.c
 	    cuesheet.c
             dsdiff.c
             dsf.c

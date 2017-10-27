@@ -34,6 +34,7 @@
 
 /* interface definition */
 #include "yarn.h"
+#include "bthread.h"
 
 /* constants */
 #define local static            /* for non-exported functions and globals */
